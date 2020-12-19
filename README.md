@@ -25,6 +25,17 @@ Methodology:
 ![Bipartisanship Ratio](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/BPR_from_presentation.png)
 
 
+
+## The BPR at Work: The First Congress (Washington Administration)
+
+Although parties as we know them were only in their nacent stage, UCLA does classify members of the first congress as being either Pro-Administration or Anti-Administration. 
+
+The thistle bars indicate the BPR for each individual vote during the 1st Congress. Red, Blue and Green provide the mean, median, and mode BPR respectively.
+
+![BPR_1st Congress (Washington Administration)_rc_votes](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/BPR_1st Congress (Washington Administration)_rc_votes.png)
+
+
+
 # Four Administrations: A Hypothesis Test
 
 The composition of congress often changes during the course of a president's administration. This change provides an interesting opportunity: the ability to compare bipartisanship within an administration.
