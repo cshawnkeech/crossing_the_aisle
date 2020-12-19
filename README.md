@@ -4,15 +4,25 @@ An EDA regarding bipartisanship in the American federal Senate. Includes develop
 
 ## Rationale
 
-Research indicates that American voters respond positively to suggestions that certain policy positions enjoy bipartisan support.  Research suggests that many less party-aligned voters will adjust their opinion of and willingness to support legislation if they are convinced that it has bipartisan support.
+[Research suggests](https://www.dartmouth.edu/~seanjwestwood/papers/Westwood2020.pdf) that American voters respond positively policy positions that claim bipartisan support.  Furthermore, voters are likely adjust their opinion of and increase their willingness to support legislation if claims are framed in bipartisan terms.
 
 There is no standard definition of bipartisanship, and the legislative process is not well understood by many voters. 
 
-It’s difficult to fact check and weigh the merits of a politician’s assertions. It’s also difficult for a politician to counter spurious suggestions of bipartisanship with any currently accepted metric.
+[As this politifact article suggests](https://www.politifact.com/factchecks/2020/feb/12/veronica-escobar/what-acceptable-measure-bipartisanship/), it’s difficult to fact check and weigh the merits of a politician’s assertions. It’s also difficult for a politician to counter spurious suggestions of bipartisanship with any currently accepted metric.
 
-## Developing a Metric
+## Developing a Metric: the Bipartisanship Ratio (BPR)
 
-A metric that takes into account a range of bipartisanship (from purely partisan)
+A metric that takes into account a range of bipartisanship would greatly assist in analyzing the issue. 
+
+The proposed metric, the Bipartisanship Ratio (BPR) would allow us to calculate the balance of the primary political parties for each individual roll-call vote in both chambers of Congress.
+
+![Bipartisanship Ratio](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/BPR_from_presentation.png)
+
+
+
+
+
+
 
 
 
