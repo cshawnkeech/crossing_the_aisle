@@ -82,7 +82,7 @@ The box plot indicates that there is a difference between the means of the two s
 
 ## Perform Welch's T Test
 
-Welch's T test returned a p value of 7.04∗10−67.04∗10−6, which was well within our 𝛼=0.05α=0.05. Bootstrapping would assist in confirming the results.
+Welch's T test returned a p value of 7.04∗10−67.04∗10−6, which was well within our 𝛼=0.05. Bootstrapping would assist in confirming the results.
 
 ## Confirm results via Bootstrap method
 
