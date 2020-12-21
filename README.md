@@ -64,10 +64,10 @@ These four, a balance of two Republican and two Democratic administrations, pres
 
 There is a statistically significant difference in congressional bipartisanship between unified and divided governments.
 
-𝐻0:𝜇1=𝜇2   There is no statistical difference in the means
-𝐻1:𝜇1≠𝜇2    There is a statistical difference in the means
+𝐻0:𝜇1=𝜇2   There is no statistical difference in the means  
+𝐻1:𝜇1≠𝜇2    There is a statistical difference in the means     
 
-We preselect our alpha as: 𝛼=0.05
+We preselect our alpha as: 𝛼=0.05  
 
 ## Methodology & Rationale:
 
