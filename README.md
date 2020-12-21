@@ -118,9 +118,11 @@ Further research directions include:
 
 ## Sources & References
 
+Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet (2020). Voteview: Congressional Roll-Call Votes Database. https://voteview.com/
+
 Mekelburg, M. (2020, February 12). *PolitiFact - What is an acceptable measure of bipartisanship?* Www.Politifact.Com. https://www.politifact.com/factchecks/2020/feb/12/veronica-escobar/what-acceptable-measure-bipartisanship/
 
 Westwood, S. J. (n.d.). *The Partisanship of Bipartisanship: How Representatives Use Bipartisan Assertions to Cultivate Support*. Https://Www.Dartmouth.Edu/. Retrieved December 4, 2020, from https://www.dartmouth.edu/~seanjwestwood/papers/Westwood2020.pdf
 
-Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet (2020). Voteview: Congressional Roll-Call Votes Database. https://voteview.com/
+
 
