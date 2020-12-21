@@ -32,7 +32,9 @@ Although parties as we know them were only in their nacent stage, UCLA does clas
 
 The thistle bars indicate the BPR for each individual vote during the 1st Congress. Red, Blue and Green provide the mean, median, and mode BPR respectively.
 
-![BPR_1st Congress (Washington Administration)_rc_votes](img/BPR_1st Congress (Washington Administration)_rc_votes.png)
+![BPR_1st Congress (Washington Administration)_rc_votes](img/BPR_1st_Congress_(Washington_Administration)_rc_votes_copy.png)
+
+
 
 
 
