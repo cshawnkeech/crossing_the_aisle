@@ -28,9 +28,11 @@ Methodology:
 
 ## The BPR at Work: The First Congress (Washington Administration)
 
+Utilizing data from [Voteview's Congressional Roll-Call Database](https://voteview.com/), we are able to calculate the BPR for each individual vote during a specific historical congress. Below is a brief analysis showing the BPR for the 1st Congress under Washington.
+
 Although parties as we know them were only in their nacent stage, UCLA does classify members of the first congress as being either Pro-Administration or Anti-Administration. 
 
-The thistle bars indicate the BPR for each individual vote during the 1st Congress. Red, Blue and Green provide the mean, median, and mode BPR respectively.
+The thistle bars indicate the BPR for votes during the 1st Congress. Red, Blue and Green provide the mean, median, and mode BPR respectively.
 
 ![BPR_1st Congress (Washington Administration)_rc_votes](img/BPR_1st_Congress_(Washington_Administration)_rc_votes_copy.png)
 
@@ -119,3 +121,6 @@ Further research directions include:
 Mekelburg, M. (2020, February 12). *PolitiFact - What is an acceptable measure of bipartisanship?* Www.Politifact.Com. https://www.politifact.com/factchecks/2020/feb/12/veronica-escobar/what-acceptable-measure-bipartisanship/
 
 Westwood, S. J. (n.d.). *The Partisanship of Bipartisanship: How Representatives Use Bipartisan Assertions to Cultivate Support*. Https://Www.Dartmouth.Edu/. Retrieved December 4, 2020, from https://www.dartmouth.edu/~seanjwestwood/papers/Westwood2020.pdf
+
+Lewis, Jeffrey B., Keith Poole, Howard Rosenthal, Adam Boche, Aaron Rudkin, and Luke Sonnet (2020). Voteview: Congressional Roll-Call Votes Database. https://voteview.com/
+
