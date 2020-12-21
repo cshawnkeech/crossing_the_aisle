@@ -8,7 +8,7 @@ An EDA regarding bipartisanship in the American federal Senate. Includes develop
 
 There is no standard definition of bipartisanship, and the legislative process is not well understood by many voters. 
 
-[As this politifact article suggests](https://www.politifact.com/factchecks/2020/feb/12/veronica-escobar/what-acceptable-measure-bipartisanship/), it’s difficult to fact check and weigh the merits of a politician’s assertions. It’s also difficult for a politician to counter spurious suggestions of bipartisanship with any currently accepted metric.
+[As this Politifact article suggests](https://www.politifact.com/factchecks/2020/feb/12/veronica-escobar/what-acceptable-measure-bipartisanship/), it’s difficult to fact check and weigh the merits of a politician’s assertions. It’s also difficult for a politician to counter spurious suggestions of bipartisanship with any currently accepted metric.
 
 ## Developing a Metric: the Bipartisanship Ratio (BPR)
 
@@ -22,7 +22,7 @@ Methodology:
 - Vote (either yea or nay) has a successful outcome
 - A ratio of the two primary parties is determined from the **successful** votes.
 
-![Bipartisanship Ratio](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/BPR_from_presentation.png)
+![Bipartisanship Ratio](img/BPR_from_presentation.png)
 
 
 
@@ -32,7 +32,7 @@ Although parties as we know them were only in their nacent stage, UCLA does clas
 
 The thistle bars indicate the BPR for each individual vote during the 1st Congress. Red, Blue and Green provide the mean, median, and mode BPR respectively.
 
-![BPR_1st Congress (Washington Administration)_rc_votes](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/BPR_1st Congress (Washington Administration)_rc_votes.png)
+![BPR_1st Congress (Washington Administration)_rc_votes](img/BPR_1st Congress (Washington Administration)_rc_votes.png)
 
 
 
@@ -78,11 +78,11 @@ We preselect our alpha as: 𝛼=0.05
 
 The box plot indicates that there is a difference between the means of the two sample distributions.
 
-![divided_vs_unified_box_plot_dark](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/divided_vs_unified_box_plot_dark.png)
+![divided_vs_unified_box_plot_dark](img/divided_vs_unified_box_plot_dark.png)
 
 ## Perform Welch's T Test
 
-Welch's T test returned a p value of 7.04∗10−67.04∗10−6, which was well within our 𝛼=0.05α=0.05. Bootstrapping would assist in confirming the results.
+Welch's T test returned a p value of 7.04∗10−67.04∗10−6, which was well within our 𝛼=0.05. Bootstrapping would assist in confirming the results.
 
 ## Confirm results via Bootstrap method
 
@@ -92,7 +92,7 @@ For each distribution:
 - find the mean of this set of 1000 values
 - repeat this process, creating a list of 10000 means from each distribution
 
-![d_vs_u_bootstrap_mean_density](/Users/christopherkeech/coding_projects/dsi_remote_pt/capstones/crossing_the_aisle/img/d_vs_u_bootstrap_mean_density.png)
+![d_vs_u_bootstrap_mean_density](img/d_vs_u_bootstrap_mean_density.png)
 
 Divided Margin of Error: 0.006423912039799648  
 
