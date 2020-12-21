@@ -36,10 +36,6 @@ The thistle bars indicate the BPR for votes during the 1st Congress. Red, Blue a
 
 ![BPR_1st Congress (Washington Administration)_rc_votes](img/BPR_1st_Congress_(Washington_Administration)_rc_votes_copy.png)
 
-
-
-
-
 # Four Administrations: A Hypothesis Test
 
 The composition of congress often changes during the course of a president's administration. This change provides an interesting opportunity: the ability to compare bipartisanship within an administration.
@@ -104,7 +100,7 @@ Unified Margin of Error: 0.0061711078795822355
 
 # Conclusions, Next Steps
 
-Although the scale of values is quite fine, Welch's T test allows us to reject the null hypothesis.
+Although the scale of values is quite fine, Welch's T test allows us to reject the null hypothesis and shows a statistical difference in the mean BPR of Divided and Unified governments.
 
 Additionally, the data suggests that a unified government may demonstrate a slight, but statistically significant, increase in legislative bipartisanship.
 
