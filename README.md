@@ -1,4 +1,4 @@
-# Crossing the Aisle: an EDA on Senate Bipartisanship
+# Crossing the Aisle: an EDA on Congressional Bipartisanship
 
 An EDA regarding bipartisanship in the American federal Senate. Includes development of a metric for comparing strength of bipartisanship per vote and initial hypothesis testing utilizing American federal data.
 
