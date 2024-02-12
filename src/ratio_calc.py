@@ -1,4 +1,4 @@
-## Import packages
+# Import packages
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,63 +15,70 @@ def calculate_bpr(members_csv, rollcalls_csv, votes_csv):
         members_csv = relative filepath as string
         rollcalls_csv = relative filepath as string
         votes_csv = relative filepath as string
-    
+
     returns:
         list of tuples
         bipartisan_results[0] = int: vote number
         bipartisan_result[1] = float: bpr for this individual vote
-        
-    three corresponding files will be needed: 
+
+    three corresponding files will be needed:
     - members
     - rollcalls
     - votes
-    
+
     each must be from the same congress or selection of congresses.
-    
+
     dependencies:
     import pandas as pd
     import numpy as np
     import matplotlib.pyplot as plt
     from scipy import stats
     import os
- 
+
     '''
-    
+
     # filepath to original files
     filepath_1_members = members_csv
     filepath_1_rollcalls = rollcalls_csv
     filepath_1_votes = votes_csv
 
     # get CSV files for votes & members to DataFrame
-    given_members_df = pd.read_csv(filepath_1_members, usecols=['icpsr', 'party_code'])
-    given_rollcalls_df = pd.read_csv(filepath_1_rollcalls, usecols=['rollnumber', 'yea_count', 'nay_count'])
-    given_votes_df = pd.read_csv(filepath_1_votes, usecols=['icpsr', 'rollnumber', 'cast_code'])
+    given_members_df = pd.read_csv(
+        filepath_1_members, usecols=['icpsr', 'party_code'])
+
+    given_rollcalls_df = pd.read_csv(
+        filepath_1_rollcalls,
+        usecols=['rollnumber', 'yea_count', 'nay_count'])
+
+    given_votes_df = pd.read_csv(
+        filepath_1_votes,
+        usecols=['icpsr', 'rollnumber', 'cast_code'])
 
     # sort values
     given_votes_df.sort_values(by=['icpsr'], inplace=True, ascending=True)
     given_members_df.sort_values(by=['icpsr'], inplace=True, ascending=True)
-    
-    # create diference column
-    given_rollcalls_df["difference"] = given_rollcalls_df['yea_count'] - given_rollcalls_df['nay_count']
+
+    # create difference column
+    given_rollcalls_df["difference"] = given_rollcalls_df['yea_count'] - \
+        given_rollcalls_df['nay_count']
 
     # create DF Merging votes & members on icpsr
     given_df = pd.merge(given_votes_df, given_members_df, on='icpsr')
-        
+
     given_rollcalls_df[["rollnumber", "difference"]]
 
-
-
     bipartisan_results = list()
-    votes_by_parties = list() # to check for individual vote values
+    votes_by_parties = list()  # to check for individual vote values
 
     for i in range(given_rollcalls_df.shape[0]):
 
         # do the i-th one
 
-        vote, spread = given_rollcalls_df.iloc[i]['rollnumber'], given_rollcalls_df.iloc[i]['difference']
+        vote, spread = (given_rollcalls_df.iloc[i]['rollnumber'],
+                        given_rollcalls_df.iloc[i]['difference'])
     #     print(vote, spread)
 
-        this_vote_bool = lambda x: x['rollnumber'] == vote
+        def this_vote_bool(x): return x['rollnumber'] == vote
 
         this_vote = given_df[this_vote_bool]
 
@@ -80,30 +87,35 @@ def calculate_bpr(members_csv, rollcalls_csv, votes_csv):
         # vote_counts = given_df[this_vote_bool]['cast_code'].value_counts()
         # print(f"vote_counts = {vote_counts}")
 
-        if spread > 0: # if yea's successful, checkng yea types
-            successful_vote_bool = lambda x: (x['cast_code'] == 1) | (x['cast_code'] == 2) | (x['cast_code'] == 3)
-        elif spread < 0: # if nay's successful, checking nay types
-            successful_vote_bool = lambda x: (x['cast_code'] == 4) | (x['cast_code'] == 5) | (x['cast_code'] == 6)
-        elif spread == 0: # if the initial vote was a tie...
-    #         print("tie: this data skipped.")
+        if spread > 0:  # if yea's successful, checking yea types
+            def successful_vote_bool(x): return (x['cast_code'] == 1) | (
+                x['cast_code'] == 2) | (x['cast_code'] == 3)
+        elif spread < 0:  # if nay's successful, checking nay types
+            def successful_vote_bool(x): return (x['cast_code'] == 4) | (
+                x['cast_code'] == 5) | (x['cast_code'] == 6)
+        elif spread == 0:  # if the initial vote was a tie...
+            #         print("tie: this data skipped.")
             continue
 
-        # value_counts returns values in decending order by default
-        this_vote_by_parties = this_vote[successful_vote_bool]['party_code'].value_counts()
+        # value_counts returns values in descending order by default
+        this_vote_by_parties = (
+            this_vote[successful_vote_bool]['party_code'].value_counts())
+
         votes_by_parties.append(this_vote_by_parties)
 
-        # this will work fine with two parties, but would become less accurate given a third...
+        # this will work fine with two parties,
+        # but would become less accurate given a third...
 
-        # accomodate 0 bipartisanship:
+        # accommodate 0 bipartisanship:
         if len(this_vote_by_parties) == 1:
             bipartisan_ratio = 0
         else:
-            # value_counts return values in decending order by default
-            bipartisan_ratio = this_vote_by_parties.iloc[1] / this_vote_by_parties.iloc[0]
+            # value_counts return values in descending order by default
+            bipartisan_ratio = this_vote_by_parties.iloc[1] / \
+                this_vote_by_parties.iloc[0]
 
     #     print(f"Bipartisan ratio = {bipartisan_ratio}")
         bipartisan_results.append((vote, bipartisan_ratio))
-
 
     return bipartisan_results
 
@@ -111,18 +123,18 @@ def calculate_bpr(members_csv, rollcalls_csv, votes_csv):
 # create a graph
 
 def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
-
     '''
     returns graph of given_bpr
-    
-    given_bpr: list of tuples 
+
+    given_bpr: list of tuples
     - given_bpr[i][0] is the vote number
     - given_bpr[i][1] is the bpr for that vote
-    
-    title_header: The supertitle for the graph. 
+
+    title_header: The supertitle for the graph.
         It will be part of the file name if save_file=True
-    save_file: boolean, defaluts to False. 
-        If True, a copy of the graph will be saved in img folder within the current directory
+    save_file: boolean, defaults to False.
+        If True, a copy of the graph will be saved in img folder
+                 within the current directory
         if the folder does not exist, it will be created
     dark: boolean, defaults to False
         If True, graph will be in dark color scheme
@@ -132,10 +144,10 @@ def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
         t_header = str(title_header)
     else:
         t_header = ""
-    
+
     bipartisan_results = given_bpr
     total_votes = len(given_bpr)
-    
+
     if dark:
         plt.style.use('dark_background')
 #         ax.style.use('dark_background')
@@ -144,13 +156,15 @@ def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
 #         # ax.patch.set_facecolor("white")
 
     figW, figH = (16, 6)
-    fig, ax = plt.subplots(1, figsize = (figW,figH))
-    
-
+    fig, ax = plt.subplots(1, figsize=(figW, figH))
 
     x_range = [i for i in range(len(bipartisan_results))]
-    y_range = [bipartisan_results[i][1] for i in range(len(bipartisan_results))]
-    y_vote = [bipartisan_results[i][0] for i in range(len(bipartisan_results))]
+
+    y_range = [
+        bipartisan_results[i][1] for i in range(len(bipartisan_results))]
+
+    # y_vote = [
+    #     bipartisan_results[i][0] for i in range(len(bipartisan_results))]
 
     bpr_mean = np.mean(y_range)
     bpr_median = float(np.median(y_range))
@@ -165,29 +179,43 @@ def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
     bpr_mode_count = f"{int(bpr_mode_tuple[1])}"
 
     # BPR for each individual vote
-    ax.bar(x_range, y_range, color='thistle', alpha=0.7, fill = True, edgecolor=None, width=0.8)
+    ax.bar(x_range, y_range, color='thistle', alpha=0.7,
+           fill=True, edgecolor=None, width=0.8)
 
     # Mean BPR for this congress
-    plt.axhline(y=bpr_mean, xmin=0, xmax=.5, linewidth=2, color='r', label="mean")
+    plt.axhline(y=bpr_mean, xmin=0, xmax=.5,
+                linewidth=2, color='r', label="mean")
 
     # Median
-    plt.axhline(y=bpr_median, xmin=.5, xmax=1, linewidth=2, color='b', label="median")
+    plt.axhline(y=bpr_median, xmin=.5, xmax=1,
+                linewidth=2, color='b', label="median")
 
     # Mode BPR for this congress
-    plt.axhline(y=bpr_mode_tuple[0], xmin=.33, xmax=.66, linewidth=3, color='g', label="mode")
+    plt.axhline(y=bpr_mode_tuple[0], xmin=.33,
+                xmax=.66, linewidth=3, color='g', label="mode")
 
     # title & labels
     if len(title_header) > 0:
         title_h = f'{title_header}\n'
     else:
         title_h = ""
-        
-    ax.set_title(f'{title_h}Bipartisanship Ratio for Roll Call Votes', fontsize=22)
-    ax.set_xlabel(f'Individual Roll Call Votes\nOverall BPR Mean = {bpr_mean:.2f}, Median = {bpr_median:.2f}\nMode = {bpr_mode_display} (count={bpr_mode_count}) Total Votes = {total_votes}', fontsize=18)
+
+    ax.set_title(
+        f'{title_h}Bipartisanship Ratio for Roll Call Votes', fontsize=22)
+
+    ax.set_xlabel(
+        f'Individual Roll Call Votes\n'
+        f'Overall BPR Mean = {bpr_mean:.2f}, Median = {bpr_median:.2f}\n'
+        f'Mode = {bpr_mode_display} (count={bpr_mode_count}) '
+        f'Total Votes = {total_votes}',
+        fontsize=18)
+
     ax.set_ylabel('Bipartisanship Ratio', fontsize=18)
 
     ax.set_xticks(x_range)
-    # # the names for individual votes are not currently of interest, so we are leaving the ticks unlabled
+
+    # the names for individual votes are not currently of interest,
+    # so the ticks are left unlabeled
     ax.set_xticklabels([i + 1 for i in x_range])
 
     plt.locator_params(axis='x', nbins=20)
@@ -195,8 +223,13 @@ def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
     ax.set_yticks(np.arange(0, 1.1, 0.1))
 
     # # legend
-    plt.legend(('Mean Bipartisanship Rato', 'Median Bipartisanship Ratio', 'Mode Bipartisanship Ratio','Bipartisanship Ratio\nper Individual Vote'), loc='upper right')
-    
+    plt.legend(
+        ('Mean Bipartisanship Rato',
+         'Median Bipartisanship Ratio',
+         'Mode Bipartisanship Ratio',
+         'Bipartisanship Ratio\nper Individual Vote'),
+        loc='upper right')
+
     # to save file
     if save_file:
         file_name = f"img/BPR_{t_header}_rc_votes.png"
@@ -209,111 +242,116 @@ def bpr_result_graph(given_bpr, title_header, save_file=False, dark=False):
 
     plt.show()
 
-    
-    
+
 def generate_bpr_range(start_num_str, stop_num_str=None, chamber="S"):
-    
     '''
     start_num_str: congress number in str form
-    stop_num_str: congress number in str form for last, if none, only start_num_str year will be processed
+    stop_num_str: congress number in str form for last,
+        if None, only start_num_str year will be processed
     chamber: str
         - S for Senate (default)
-        - H for House 
+        - H for House
         - HS for combined congress
-    
-    
     '''
-    
+
     acc_list = list()
-    
+
     chamber = chamber.upper()
-    
+
     for i in range(int(start_num_str), int(stop_num_str) + 1):
-        
-#         print(f"processing {i}")
-        
+
+        #         print(f"processing {i}")
+
         if len(str(i)) == 1:
-            i_str = "00"+ str(i)
+            i_str = "00" + str(i)
         elif len(str(i)) == 2:
             i_str = "0" + str(i)
         else:
             i_str = str(i)
-            
-        x = calculate_bpr(members_csv=f"test_data/{chamber}{i_str}_members.csv",
-              rollcalls_csv=f"test_data/{chamber}{i_str}_rollcalls.csv",
-              votes_csv=f"test_data/{chamber}{i_str}_votes.csv")
-        
+
+        x = calculate_bpr(
+            members_csv=f"test_data/{chamber}{i_str}_members.csv",
+            rollcalls_csv=f"test_data/{chamber}{i_str}_rollcalls.csv",
+            votes_csv=f"test_data/{chamber}{i_str}_votes.csv")
+
         acc_list.append(x)
-        
+
     return acc_list
 
+
 def get_bpr_data_from_urls(given_list, chamber="HS"):
-    
     """
-    given a list of session numbers, 
+    given a list of session numbers,
     function returns a dictionary of BPR DataFrames for requested sessions
-    
+
     Arguments:
     given_list: list of congressional session numbers to return
     chamber: str
         - "H" for House
         - "S" for Senate
         - "HS" for Congress combined
-    
+
     Returns: dict of BPR DataFrames
-    
+
     """
-    
+
     # accumulator dict for each given session
     bpr_dict = dict()
-    
+
     for i in given_list:
-        
+
         # ensure leading zeros formatted correctly
         if len(str(i)) == 1:
-            i_str = "00"+ str(i)
+            i_str = "00" + str(i)
         elif len(str(i)) == 2:
             i_str = "0" + str(i)
         else:
             i_str = str(i)
-        
+
         # construct url for given session
-        members_url = f"https://voteview.com/static/data/out/members/{chamber.upper()}{i_str}_members.csv"
-        rollcalls_url = f"https://voteview.com/static/data/out/rollcalls/{chamber.upper()}{i_str}_rollcalls.csv"
-        votes_url = f"https://voteview.com/static/data/out/votes/{chamber.upper()}{i_str}_votes.csv"
-        
+        members_url = f"https://voteview.com/static/data/out/" \
+            f"members/{chamber.upper()}{i_str}_members.csv"
+
+        rollcalls_url = f"https://voteview.com/static/data/out/" \
+            f"rollcalls/{chamber.upper()}{i_str}_rollcalls.csv"
+
+        votes_url = f"https://voteview.com/static/data/out/" \
+            f"votes/{chamber.upper()}{i_str}_votes.csv"
+
         # construct current key in pythonic snake case
         current_key = f"{chamber.lower()}_{i_str}"
 #         print(current_key)
-        
-        bpr_dict[current_key] = calculate_bpr(members_csv=members_url, rollcalls_csv=rollcalls_url, votes_csv=votes_url)
-    
+
+        bpr_dict[current_key] = calculate_bpr(
+            members_csv=members_url,
+            rollcalls_csv=rollcalls_url,
+            votes_csv=votes_url)
+
     return bpr_dict
 
 
-def bpr_result_graph_ax(given_bpr, title_header, save_file=False, ax=None, txt_scale=1):
-
+def bpr_result_graph_ax(
+        given_bpr, title_header, save_file=False, ax=None, txt_scale=1):
     '''
     returns graph of given_bpr as ax
-    
-    given_bpr: list of tuples 
+
+    given_bpr: list of tuples
     - given_bpr[i][0] is the vote number
     - given_bpr[i][1] is the bpr for that vote
-    
-    title_header: The supertitle for the graph. 
+
+    title_header: The supertitle for the graph.
         It will be part of the file name if save_file=True
-    save_file: boolean, defaluts to False. 
-        If True, a copy of the graph will be saved in img folder within the current directory
+    save_file: boolean, defaults to False.
+        If True, a copy of the graph will be saved in img folder
+                within the current directory
         if the folder does not exist, it will be created
     '''
 
-
-    
     if title_header:
         t_header = str(title_header)
     else:
         t_header = ""
-    
+
     bipartisan_results = given_bpr
     total_votes = len(given_bpr)
 
@@ -321,8 +359,12 @@ def bpr_result_graph_ax(given_bpr, title_header, save_file=False, ax=None, txt_s
         ax = plt.gca()
 
     x_range = [i for i in range(len(bipartisan_results))]
-    y_range = [bipartisan_results[i][1] for i in range(len(bipartisan_results))]
-    y_vote = [bipartisan_results[i][0] for i in range(len(bipartisan_results))]
+
+    y_range = [
+        bipartisan_results[i][1] for i in range(len(bipartisan_results))]
+
+    # y_vote = [
+    #     bipartisan_results[i][0] for i in range(len(bipartisan_results))]
 
     bpr_mean = np.mean(y_range)
     bpr_median = float(np.median(y_range))
@@ -337,38 +379,53 @@ def bpr_result_graph_ax(given_bpr, title_header, save_file=False, ax=None, txt_s
     bpr_mode_count = f"{int(bpr_mode_tuple[1])}"
 
     # BPR for each individual vote
-    ax.bar(x_range, y_range, color='thistle', alpha=0.8, fill = True, edgecolor=None, width=0.8)
+    ax.bar(x_range, y_range, color='thistle', alpha=0.8,
+           fill=True, edgecolor=None, width=0.8)
 
     # Mean BPR for this congress
-    ax.axhline(y=bpr_mean, xmin=0, xmax=.5, linewidth=2, color='r', label="mean")
+    ax.axhline(y=bpr_mean, xmin=0, xmax=.5,
+               linewidth=2, color='r', label="mean")
 
     # Median
-    ax.axhline(y=bpr_median, xmin=.5, xmax=1, linewidth=2, color='b', label="median")
+    ax.axhline(y=bpr_median, xmin=.5, xmax=1,
+               linewidth=2, color='b', label="median")
 
     # Mode BPR for this congress
-    ax.axhline(y=bpr_mode_tuple[0], xmin=.33, xmax=.66, linewidth=3, color='g', label="mode")
+    ax.axhline(y=bpr_mode_tuple[0], xmin=.33,
+               xmax=.66, linewidth=3, color='g', label="mode")
 
     # title & labels
     if len(title_header) > 0:
         title_h = f'{title_header}\n'
     else:
         title_h = ""
-        
-    ax.set_title(f'{title_h}Bipartisanship Ratio for Roll Call Votes', fontsize=22*txt_scale)
-    ax.set_xlabel(f'Individual Roll Call Votes\nOverall BPR Mean = {bpr_mean:.2f}, Median = {bpr_median:.2f}\nMode = {bpr_mode_display} (count={bpr_mode_count}) Total Votes = {total_votes}', fontsize=18*txt_scale)
+
+    ax.set_title(
+        f'{title_h}Bipartisanship Ratio for Roll Call Votes',
+        fontsize=22*txt_scale)
+
+    ax.set_xlabel(
+        f'Individual Roll Call Votes\nOverall BPR Mean = {bpr_mean:.2f}, '
+        f'Median = {bpr_median:.2f}\nMode = {bpr_mode_display} '
+        f'(count={bpr_mode_count}) Total Votes = {total_votes}',
+        fontsize=18*txt_scale)
+
 #     ax.set_ylabel('Bipartisanship Ratio', fontsize=18*txt_scale)
 
 #     ax.set_xticks(x_range)
-    # # the names for individual votes are not currently of interest, so we are leaving the ticks unlabled
-#     ax.set_xticklabels([i + 1 for i in x_range])
+
     ax.set_xticklabels("")
-#     plt.locator_params(axis='x', nbins=10)
 
     ax.set_yticks(np.arange(0, 1.1, 0.1))
 
-    # # legend
-#     ax.legend(('Mean Bipartisanship Rato', 'Median Bipartisanship Ratio', 'Mode Bipartisanship Ratio','Bipartisanship Ratio\nper Individual Vote'), loc='upper right')
-    
+    # legend
+    # ax.legend(
+    #     ('Mean Bipartisanship Rato',
+    #      'Median Bipartisanship Ratio',
+    #      'Mode Bipartisanship Ratio',
+    #      'Bipartisanship Ratio\nper Individual Vote'),
+    #     loc='upper right')
+
     # to save file
     if save_file:
         file_name = f"img/BPR_{t_header}_rc_votes.png"
