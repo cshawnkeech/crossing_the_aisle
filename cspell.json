@@ -1,0 +1,60 @@
+// cSpell Settings
+{
+    // Version of the setting file.  Always 0.2
+    "version": "0.2",
+    // language - current active spelling language
+    "language": "en",
+    // paths to ignore
+    "ignorePaths": [
+        "./cspell.json"
+    ],
+    // words - list of words to be always considered correct
+    "words": [
+        "arange",
+        "axhline",
+        "boxplot",
+        "bstrp",
+        "cornflowerblue",
+        "ddof",
+        "edgecolor",
+        "facecolor",
+        "figsize",
+        "flierprops",
+        "fontsize",
+        "icpsr",
+        "iloc",
+        "kdeplot",
+        "markerfacecolor",
+        "Mekelburg",
+        "nbins",
+        "Politifact",
+        "pvalue",
+        "rollcalls",
+        "rollnumber",
+        "Rosenthal",
+        "Rudkin",
+        "smple",
+        "supertitle",
+        "suptitle",
+        "ttest",
+        "usecols",
+        "Voteview",
+        "Westwood",
+        "xlabel",
+        "xticklabels",
+        "xticks",
+        "ylabel",
+        "yticklabels",
+        "yticks"
+    ],
+    "dictionaries": [
+        "python",
+        "latex"
+    ],
+    // flagWords - list of words to be always considered incorrect
+    // This is useful for offensive words and common spelling errors.
+    // For example "hte" should be "the"
+    "flagWords": [
+        "hte"
+    ]
+}
